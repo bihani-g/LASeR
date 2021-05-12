@@ -23,7 +23,7 @@ def get_poly_sents(senses, word):
 
 
 #get a list of polysemous words
-os.chdir('/media/disk4/context_div/WSD_data/mydata/')
+os.chdir('../WSD_data/mydata/')
 
 with open(str(data_type)+'_senses.pkl', 'rb') as f:
     senses = pickle.load(f)
@@ -47,7 +47,7 @@ for sid in tqdm(new_set):
     sent_words.append((sid, words_all))
     
 #get a list of polysemous words
-os.chdir('/media/disk4/context_div/WSD_data/mydata/')
+os.chdir('../WSD_data/mydata/')
 
 with open(str(data_type)+'_poly.pkl', 'wb') as f:
     pickle.dump(sent_words, f)

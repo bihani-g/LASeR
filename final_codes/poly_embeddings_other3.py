@@ -19,10 +19,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import pickle
 
-ds_type = sys.argv[1]
-model_type = sys.argv[2]
+ds_type = sys.argv[1] #dataset (any 5 of the semeval datasets)
+model_type = sys.argv[2] #bert/gpt2/xlnet embeddings
 
-os.chdir('/media/disk4/context_div/WSD_data/mydata/')
+os.chdir('../WSD_data/mydata/')
 
 print('getting senses', flush = True)
 with open(str(ds_type)+'_senses.pkl', 'rb') as f:
@@ -35,10 +35,6 @@ with open(str(ds_type)+'_sents.pkl', 'rb') as f:
 print('getting sentence ids for sentences with polysemous words', flush = True)
 with open(str(ds_type)+'_poly.pkl', 'rb') as f:
     poly = pickle.load(f)
-
-    
-#sents = sents[0:1000]
-#senses = [x for x in senses if x[0]<1000]
 
 
 if model_type == 'bert':
@@ -61,8 +57,7 @@ model.eval()
 print('extracting hidden states and mapping with word and sense values', flush = True)
 
 for layer in range(13):
-    os.chdir('/media/disk4/context_div/emb_data/'+str(model_type)+'/layer_'+str(layer)+'/')
-#     os.chdir('/media/disk4/context_div/test/')
+    os.chdir('../emb_data/'+str(model_type)+'/layer_'+str(layer)+'/')
     for j in tqdm(range(len(sents))):
         with open(str(ds_type)+'_embs.pkl', 'ab') as f:
             poly_words = [x[1] for x in poly if x[0] == j]
@@ -87,7 +82,6 @@ for layer in range(13):
         
                 batch = tokenizer(sents[j][1], add_special_tokens=False, return_tensors="pt")
                 input_ids = batch.input_ids
-#                 attention_mask = batch.attention_mask
     
     
                 with torch.no_grad():

@@ -17,12 +17,11 @@ from tqdm import tqdm
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import pickle
-# from functions import map_token_senses, get_hidden_states
 
-ds_type = sys.argv[1]
-model_type = 'electra'
+ds_type = sys.argv[1] #dataset (any 5 of the semeval datasets)
+model_type = 'electra' #electra embeddings
 
-os.chdir('/media/disk4/context_div/WSD_data/mydata/')
+os.chdir('../mydata/')
 
 print('getting senses', flush = True)
 with open(str(ds_type)+'_senses.pkl', 'rb') as f:
@@ -35,10 +34,6 @@ with open(str(ds_type)+'_sents.pkl', 'rb') as f:
 print('getting sentence ids for sentences with polysemous words', flush = True)
 with open(str(ds_type)+'_poly.pkl', 'rb') as f:
     poly = pickle.load(f)
-
-    
-#sents = sents[0:1000]
-#senses = [x for x in senses if x[0]<1000]
 
 
 if model_type == 'bert':
@@ -62,8 +57,7 @@ model.eval()
 print('extracting hidden states and mapping with word and sense values', flush = True)
 
 for layer in range(13):
-    os.chdir('/media/disk4/context_div/emb_data/'+str(model_type)+'/layer_'+str(layer)+'/')
-#     os.chdir('/media/disk4/context_div/test/')
+    os.chdir('../emb_data/'+str(model_type)+'/layer_'+str(layer)+'/')
     for j in tqdm(range(len(sents))):
         with open(str(ds_type)+'_embs.pkl', 'ab') as f:
             poly_words = [x[1] for x in poly if x[0] == j]
@@ -88,12 +82,10 @@ for layer in range(13):
         
                 batch = tokenizer(sents[j][1], add_special_tokens=False, return_tensors="pt")
                 input_ids = batch.input_ids
-#                 attention_mask = batch.attention_mask
     
     
                 with torch.no_grad():
                     last_hidden_states = model(input_ids, output_hidden_states = True)
-#                 print(last_hidden_states[1][layer][0].shape)
                     hidden_states.append(last_hidden_states[1][layer][0])   
     
                 hidden_states = [y for x in hidden_states for y in x]
@@ -104,7 +96,6 @@ for layer in range(13):
     
     
                 sense_embeds = list(zip(poly_toks_flat, poly_hidden))
-#             print(sense_embeds[0][1])
 
 
                 pickle.dump(sense_embeds, f)

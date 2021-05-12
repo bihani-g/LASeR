@@ -15,16 +15,12 @@ import statistics as st
 from retrofitting_funcs import get_embs, mean_centering, format_vector, top_d_var, dim_removal, retrofit
 from sim_funcs import get_self_sim, get_avg_sense_sim, get_inter_sim, get_wf, get_sf, sim_combine
 
-# data_type = sys.argv[1]
 model_type = sys.argv[1]
 
-# data_type = 'semeval15_13'
-# model_type = 'bert'
 
-os.chdir('/media/disk4/context_div/WSD_data/mydata/')
+os.chdir('../WSD_data/mydata/')
 
 datasets = ['semeval15_13', 'senseval3task1', 'senseval2', 'semeval13_12', 'semeval07_7']
-# , 'raganato_ALL', 'senseval3task6', 'senseval3task6_train']
 
 
 data = {}
@@ -45,8 +41,13 @@ for layer in range(13):
         van_cent_dim_retro = format_vector(retrofit(van_cent_dim), van[data_num])
     
         #saving files
-        os.chdir('/media/disk4/context_div/emb_data/'+str(model_type)+'/layer_'+str(layer)+'/')
-
+        os.chdir('../emb_data/'+str(model_type)+'/layer_'+str(layer)+'/')
+            
+        #saving LA vectors
+        with open(str(data_num)+'_1_cent_embs.pkl', 'wb') as f1:
+            pickle.dump(van_cent_dim, f1)
+            
+        #saving LASeR vectors
         with open(str(data_num)+'_1_retro_embs.pkl', 'wb') as f1:
             pickle.dump(van_cent_dim_retro, f1)
         
