@@ -7,12 +7,12 @@ WSD_data/
 .ipynb_checkpoints/
 .jupyter_notebook_config.py.swp
 __pycache__/
-final_codes/sense_analysis.py
-final_codes/all_words_anisotropy.py
-final_codes/all_words_plots.py
-final_codes/all_anisotropy_wf_pos.py
-final_codes/retro_anisotropy_wf_pos.py
-final_codes/sense_analysis.py
+/final_codes/sense_analysis.py
+/final_codes/all_words_anisotropy.py
+/final_codes/all_words_plots.py
+/final_codes/all_anisotropy_wf_pos.py
+/final_codes/retro_anisotropy_wf_pos.py
+/final_codes/sense_analysis.py
 .jupyter_notebook_config.py.swp
 /final_codes/retro_embs_semcor.py
 
