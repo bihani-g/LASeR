@@ -10,10 +10,8 @@ import sklearn
 
 
 ##getting embedding data
-def get_embs(data_type, layer, model):
-#     os.chdir('/media/disk4/context_div/emb_data/'+model+'/layer_'+str(layer)+'/')
-    
-    os.chdir('/nfs/gpusan01/gbihani/context_div/emb_data/'+model+'/layer_'+str(layer)+'/')
+def get_embs(data_type, layer, model):    
+    os.chdir('../emb_data/'+model+'/layer_'+str(layer)+'/')
 
     data = []
     with open(str(data_type)+'_embs.pkl', 'rb') as f:
@@ -29,8 +27,7 @@ def get_embs(data_type, layer, model):
 
 ##getting retrofitted embedding data
 def get_retro_embs(data_type, layer, model, d):
-#     os.chdir('/media/disk4/context_div/emb_data/'+model+'/layer_'+str(layer)+'/')
-    os.chdir('/nfs/gpusan01/gbihani/context_div/emb_data/'+model+'/layer_'+str(layer)+'/')
+    os.chdir('../emb_data/'+model+'/layer_'+str(layer)+'/')
 
     with open(str(data_type)+'_'+str(d)+'_retro_embs.pkl', 'rb') as f:
         data = pickle.load(f)
@@ -58,9 +55,7 @@ def top_d_var(embs,d):
     emb_all = [np.array(x[1]) for x in embs]
     pca = PCA(n_components=d)
     pca.fit_transform(emb_all)
-    exp_var = [round(x*100,2) for x in pca.explained_variance_ratio_]
-#     print([round(x*100,2) for x in pca.explained_variance_ratio_])
-    
+    exp_var = [round(x*100,2) for x in pca.explained_variance_ratio_]    
     return exp_var
     
 ##remove top d pca dimensions

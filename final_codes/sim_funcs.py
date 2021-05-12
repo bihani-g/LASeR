@@ -60,7 +60,6 @@ def get_avg_sense_sim(word, data):
         
         final_sen_sim = round(avg_sen_sim/len(sense_sim),3)
 
-#         print(list(zip(w_sense_unq, sense_sim))) #get this for getting sense-level similarities for each word
     
     else: #sense sim is self similarity, as there is only one sense
         sim_sum = 0
@@ -80,13 +79,8 @@ def get_avg_sense_sim(word, data):
             count = 1
             
         final_sen_sim = round(sim_sum/count,3)
-        
-
-        
-#         print(w_sense_unq, final_sen_sim)
-    
+            
     return final_sen_sim
-#     return list(zip(w_sense_unq, sense_sim))
 
 
 #inter sim
@@ -142,7 +136,6 @@ def sim_combine(words, data):
     overall_ = [] #word freq, sense freq, self_sim, avg. sense_sim, inter_sim   
     
     for word in tqdm(words):
-#         print(word)
         word_l = []
         wf_ = []
         sf_ = []
@@ -156,7 +149,6 @@ def sim_combine(words, data):
             wf_.append(get_wf(word, data))
             sf_.append(get_sf(word, data))
             self_.append(get_self_sim(word, data))
-#             sense_.append(get_avg_sense_sim(word, data))
             sense0_.append(sense_sep[i][0])
             sense1_.append(sense_sep[i][1])
             inter_.append(get_inter_sim(word, data))
@@ -197,12 +189,10 @@ def get_sense_sim(word, data):
                 c = 1
                 
             sense_sim.append(round(sensim_sum/c,3))
-#         print(sense_sim)
             
         combined_sim = list(zip(w_sense_unq, sense_sim))
 
 
-#         print(list(zip(w_sense_unq, sense_sim))) #get this for getting sense-level similarities for each word
     
     else: #sense sim is self similarity, as there is only one sense
         sense_sim = []
@@ -219,7 +209,6 @@ def get_sense_sim(word, data):
                         sim_sum = sim_sum + sim
                         count = count + 1
             
-#             sense_sim.append(round(sensim_sum/c,3))
             
             combined_sim = [(w_sense_unq, round(sim_sum/count,3))]
                         
@@ -230,11 +219,8 @@ def get_sense_sim(word, data):
             combined_sim = [(w_sense_unq, round(sim_sum/count,3))]
         
 
-        
-#         print(w_sense_unq, final_sen_sim)
-    
+           
     return combined_sim
-#     return list(zip(w_sense_unq, sense_sim))
 
 
 
